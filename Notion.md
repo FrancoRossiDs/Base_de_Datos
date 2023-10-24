@@ -1,0 +1,1 @@
+https://kriptonitx.notion.site/kriptonitx/Base-de-datos-1e6f26c8fc644079b31f87e0c4be4a49
