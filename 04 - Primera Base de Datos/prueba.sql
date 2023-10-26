@@ -30,3 +30,9 @@ create table curso(
 );
 -- agregar columna
 alter table usuario add apellido varchar(50);
+
+-- modificar columna 
+alter table usuario MODIFY apellido varchar(50) not null;
+
+-- eliminar columna
+alter table usuario drop apellido
