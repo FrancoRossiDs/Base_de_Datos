@@ -1,10 +1,10 @@
 /*1. Listar las canciones cuya duración sea mayor a 2 minutos.*/
-SELECT c.id, c.nombre, c.compositor, c.milisegundos 
+SELECT c.id ID, c.nombre Nombre, c.compositor Compositor, c.milisegundos Duración
 FROM canciones c
 WHERE milisegundos > 120000;
 
 /*2. Listar las canciones cuyo nombre comience con una vocal.  */
-SELECT c.id, c.nombre, c.compositor
+SELECT c.id ID, c.nombre Nombre, c.compositor Compositor
 FROM canciones c
 WHERE c.nombre LIKE 'a%' OR c.nombre LIKE 'e%' OR c.nombre LIKE 'i%' OR c.nombre LIKE 'o%' OR c.nombre LIKE 'u%'
    OR c.nombre LIKE 'A%' OR c.nombre LIKE 'E%' OR c.nombre LIKE 'I%' OR c.nombre LIKE 'O%' OR c.nombre LIKE 'U%';
