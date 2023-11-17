@@ -107,9 +107,41 @@ ON f.ClienteID = c.ClienteID
 WHERE c.Titulo="Owner" AND c.Pais="USA";
 
 /*5. Mostrar todos los campos de las facturas del empleado cuyo apellido sea “Leverling” o que incluyan el producto id = “42”.*/
-SELECT FacturaID, e.Nombre, e.Apellido
-FROM facturas f 
-JOIN empleados e
-ON f.EmpleadoID = e.EmpleadoID
-WHERE e.Apellido="Leverling" OR f.FacturaID="42";
+SELECT e.Apellido ,fd.ProductoID, f.*
+FROM empleados e
+JOIN facturas f ON e.EmpleadoID = f.EmpleadoID
+JOIN facturadetalle fd ON f.FacturaID = fd.FacturaID
+WHERE e.Apellido = "Leverling" OR fd.ProductoID = 42;
+
+
+/*6. Mostrar todos los campos de las facturas del empleado cuyo apellido sea “Leverling” y que incluya los producto id = “80” o ”42”.*/
+SELECT e.Apellido, fd.ProductoID, f.*
+FROM empleados e
+JOIN facturas f ON e.EmpleadoID = f.EmpleadoID
+JOIN facturadetalle fd ON f.FacturaID = fd.FacturaID
+WHERE e.Apellido = 'Leverling' AND (fd.ProductoID = 42 OR fd.ProductoID = 80);
+
+/*7. Generar un listado con los cinco mejores clientes, según sus importes de compras total (PrecioUnitario * Cantidad).*/
+SELECT c.Contacto ,(fd.PrecioUnitario*fd.Cantidad) Total
+FROM clientes c
+JOIN facturas f
+ON c.ClienteID = f.ClienteID
+JOIN facturadetalle fd
+ON f.FacturaID = fd.FacturaID
+ORDER BY (fd.PrecioUnitario*fd.Cantidad) DESC
+LIMIT 5;
+
+/*8. Generar un listado de facturas, con los campos id, nombre y apellido del cliente, fecha de factura, país de envío, Total, ordenado de manera descendente por fecha de factura y limitado a 10 filas.*/
+SELECT c.ClienteID ID,c.Contacto Nombre_Apellido ,f.FechaFactura  Fecha,f.PaisEnvio Pais,(fd.Cantidad*fd.PrecioUnitario) Total
+FROM clientes c
+JOIN facturas f
+ON c.ClienteID = f.ClienteID
+JOIN facturadetalle fd
+ON f.FacturaID = fd.FacturaID
+ORDER BY f.FechaFactura DESC
+LIMIT 10;
+
+
+
+
 
