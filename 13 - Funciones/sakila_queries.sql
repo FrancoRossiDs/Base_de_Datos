@@ -31,3 +31,26 @@ incluir en el resultado todas las columnas disponibles.
 SELECT *
 FROM rental
 WHERE EXTRACT(MONTH FROM rental_date) = 5 AND EXTRACT(YEAR FROM rental_date) = 2005;
+
+/*Reportes parte 2*/
+/*
+1. Obtener la cantidad TOTAL de alquileres (rentals). Utilizar un alias para mostrarlo
+en una columna llamada cantidad
+*/
+SELECT SUM(r.rental_id) TOTAL
+FROM rental r;
+
+/*
+2. Obtener la suma TOTAL de todos los pagos (payments). Utilizar un alias para
+mostrarlo en una columna llamada total, junto a una columna con la cantidad de
+alquileres con el alias Cantidad y una columna que indique el Importe promedio
+por alquiler
+*/
+SELECT SUM(p.amount) TOTAL, COUNT(p.rental_id) Cantidad, AVG(amount) Importe_Promedio
+FROM payment p;
+
+/*
+3. Generar un reporte que responda la pregunta: ¿cuáles son los diez clientes que más
+dinero gastan y en cuántos alquileres lo hacen?
+*/
+
