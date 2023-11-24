@@ -53,4 +53,69 @@ FROM payment p;
 3. Generar un reporte que responda la pregunta: ¿cuáles son los diez clientes que más
 dinero gastan y en cuántos alquileres lo hacen?
 */
+SELECT c.first_name Nombre, c.last_name Apellido, p.amount Monto, r.rental_id Renta
+FROM customer c
+JOIN payment p
+ON c.customer_id =p.customer_id
+JOIN rental r
+ON p.customer_id = r.customer_id
+GROUP BY c.customer_id, p.amount,r.rental_id
+ORDER BY p.amount DESC
+LIMIT 10;
+
+/*
+4. Generar un reporte que indique: ID de cliente, cantidad de alquileres y monto
+total para todos los clientes que hayan gastado más de 150 dólares en alquileres
+*/
+SELECT
+    c.customer_id AS IDCliente,
+    COUNT(DISTINCT r.rental_id) AS CantidadAlquileres,
+    SUM(p.amount) AS MontoTotal
+FROM
+    customer c
+JOIN payment p ON c.customer_id = p.customer_id
+JOIN rental r ON p.rental_id = r.rental_id
+GROUP BY
+    c.customer_id
+HAVING
+    MontoTotal > 150;    
+/*
+5. Generar un reporte que muestre por mes de alquiler (rental_date de tabla rental),
+la cantidad de alquileres y la suma total pagada (amount de tabla payment) para el
+año de alquiler 2005 (rental_date de tabla rental).
+*/
+SELECT
+	 p.payment_date Fecha, extract(MONTH FROM p.payment_date) Meses , extract(YEAR FROM p.payment_date) Año ,  SUM(p.amount) Monto
+FROM 
+	payment p
+JOIN 
+	rental r
+ON 
+	p.rental_id=r.rental_id
+WHERE 
+	extract(YEAR FROM p.payment_date) = 2005
+GROUP BY
+	p.payment_date
+ORDER BY 
+	extract(MONTH FROM p.payment_date);	
+/*
+6. Generar un reporte que responda a la pregunta: ¿cuáles son los 5 inventarios más
+	alquilados? (columna inventory_id en la tabla rental). Para cada una de ellas
+	indicar la cantidad de alquileres.
+*/   
+SELECT
+	 i.inventory_id ID, COUNT(i.inventory_id) Cantidad
+FROM 
+	payment p
+JOIN 
+	rental r ON p.rental_id=r.rental_id
+JOIN
+	inventory i ON r.inventory_id=i.inventory_id
+GROUP BY 
+	i.inventory_id
+ORDER BY 
+	COUNT(i.inventory_id) DESC
+LIMIT 5;
+
+
 
