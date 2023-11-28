@@ -3,14 +3,15 @@
 1. Obtener los artistas que han actuado en una o más películas.
 */
 SELECT
-	concat(a.nombre, " " , a.apellido) Nombre
+	concat(a.nombre, " " , a.apellido) Nombre,COUNT(p.titulo) Cantidad_Peliculas
 FROM 
 	artista a
 JOIN
 	artista_x_pelicula axp ON a.id=axp.artista_id
 JOIN
 	pelicula p ON axp.pelicula_id=p.id
-WHERE titulo IS NOT NULL;
+WHERE p.titulo IS NOT NULL
+GROUP BY concat(a.nombre, " " , a.apellido);
 /*
 2. Obtener las películas donde han participado más de un artista según nuestra base de datos. 
 */

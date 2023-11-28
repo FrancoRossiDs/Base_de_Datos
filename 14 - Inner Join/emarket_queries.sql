@@ -42,7 +42,7 @@ JOIN
 SELECT
 	c.CategoriaID ID, 
     c.CategoriaNombre, 
-    AVG(p.PrecioUnitario) Promedio
+    round(AVG(p.PrecioUnitario),2) Promedio
 FROM 
 	categorias c
 RIGHT JOIN 
