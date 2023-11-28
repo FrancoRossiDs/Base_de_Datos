@@ -188,7 +188,7 @@ WHERE
    Campos: t.nombre, *
 */
 SELECT 
-*
+	t.nombre Tipo, COUNT(p.nombre) Cantidad,round(AVG(eb.velocidad),2) Promedio_Velocidad
 FROM 
 	tipo t
 JOIN
@@ -197,5 +197,54 @@ JOIN
 	pokemon p ON pt.numero_pokedex=p.numero_pokedex
 JOIN
 	estadisticas_base eb ON p.numero_pokedex=eb.numero_pokedex
+GROUP BY t.nombre
+HAVING AVG(eb.velocidad)>80 AND COUNT(p.nombre)>3;
+
+/*Registros*/
+/*
+1. Muestra el nombre de cada Pokémon junto con su tipo, velocidad base y puntos de
+   salud (PS) base. Ordena los resultados por la velocidad base de forma descendente.
+   Tablas: pokemon, estadisticas_base, pokemon_tipo, tip
+*/
+SELECT
+	p.nombre Nombre, t.nombre Tipo, eb.velocidad Velocidad_Base, eb.ps PS
+FROM 
+	tipo t
+JOIN 
+	pokemon_tipo pt ON t.id_tipo=pt.id_tipo
+JOIN 
+	pokemon p ON pt.numero_pokedex=p.numero_pokedex
+JOIN 
+	estadisticas_base eb ON p.numero_pokedex=eb.numero_pokedex
+ORDER BY eb.velocidad DESC;
+/*
+2. Muestra los nombres de los movimientos de tipo "Agua" junto con los nombres de
+   los Pokémon que pueden aprenderlos y el peso promedio de estos Pokémon.
+   Tablas: movimiento, tipo_ataque, pokemon_tipo, tipo, pokemon
+   Campos: m.nombre, p.nombre, peso
+*/
+SELECT 
+	t.nombre Tipo, m.nombre Movimiento, p.nombre Nombre, AVG(p.peso) Peso
+FROM 
+	pokemon p
+JOIN 
+	pokemon_tipo pt ON p.numero_pokedex=pt.numero_pokedex
+JOIN 
+	tipo t ON pt.id_tipo=t.id_tipo
+JOIN
+	tipo_ataque ta ON t.id_tipo_ataque=ta.id_tipo_ataque
+JOIN
+	movimiento m ON t.id_tipo=m.id_tipo
+WHERE
+	t.nombre="Agua"
+GROUP BY
+    m.nombre, p.nombre
+ORDER BY 
+	m.nombre;
+
+
+	
+
+
 	
     
