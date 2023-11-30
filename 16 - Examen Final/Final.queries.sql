@@ -235,6 +235,6 @@ JOIN
 GROUP BY 
 	t.nombre, m.nombre, p.nombre, m.potencia
 HAVING 
-	t.nombre="Fuego" AND AVG(m.potencia)> 50
+	t.nombre="Fuego" AND AVG(m.potencia)> 50;
 
 
