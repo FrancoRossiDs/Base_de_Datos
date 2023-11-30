@@ -221,7 +221,7 @@ HAVING
    Campos: m.nombre, p.nombre, p.altura
 */
 SELECT 
-	 t.nombre Tipo, p.nombre Pokemon, round(AVG(p.altura),2) Altura, m.potencia Potencia_Promedio
+	 t.nombre Tipo,m.nombre Movimiento,  p.nombre Pokemon, round(AVG(p.altura),2) Altura, m.potencia Potencia_Promedio
 FROM 
 	movimiento m
 JOIN 
@@ -233,7 +233,7 @@ JOIN
 JOIN
 	tipo_ataque ta ON t.id_tipo_ataque=ta.id_tipo_ataque 
 GROUP BY 
-	t.nombre, p.nombre, m.potencia
+	t.nombre, m.nombre, p.nombre, m.potencia
 HAVING 
 	t.nombre="Fuego" AND AVG(m.potencia)> 50
 
